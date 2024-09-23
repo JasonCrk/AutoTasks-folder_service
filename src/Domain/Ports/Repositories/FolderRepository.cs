@@ -7,5 +7,6 @@ namespace Domain.Ports.Repositories
     {
         Task<Folder> Save(Folder folder);
         Task<bool> Delete(FolderId id);
+        Task<bool> ExistsById(FolderId id);
     }
 }
