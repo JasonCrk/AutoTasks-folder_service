@@ -1,7 +1,8 @@
-using Dapper;
 using Domain.Entities;
 using Domain.Ports.Repositories;
 using Domain.ValueObjects;
+
+using Dapper;
 
 using Npgsql;
 
@@ -31,6 +32,16 @@ namespace Infrastructure.Adapters.Repositories
                 int exists = await connection.QuerySingleAsync(sql, new { Id = id.Value });
 
                 return exists > 0;
+            }
+        }
+
+        public async Task<Folder?> FindById(FolderId id)
+        {
+            using (var connection = new NpgsqlConnection(_connectionString))
+            {
+                string sql = "SELECT id, name, user_id, parent_folder_id FROM folders WHERE id = @Id";
+                var folder = await connection.QuerySingleOrDefault(sql, new { Id = id.Value });
+                return folder;
             }
         }
 
