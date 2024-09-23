@@ -23,6 +23,17 @@ namespace Infrastructure.Adapters.Repositories
             return true;
         }
 
+        public async Task<bool> ExistsById(FolderId id)
+        {
+            using (var connection = new NpgsqlConnection(_connectionString))
+            {
+                string sql = "SELECT COUNT(*) FROM folders WHERE id = @Id";
+                int exists = await connection.QuerySingleAsync(sql, new { Id = id.Value });
+
+                return exists > 0;
+            }
+        }
+
         public async Task<Folder> Save(Folder folder)
         {
             using (var connection = new NpgsqlConnection(_connectionString))
