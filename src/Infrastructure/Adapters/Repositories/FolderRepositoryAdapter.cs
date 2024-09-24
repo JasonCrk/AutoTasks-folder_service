@@ -62,5 +62,21 @@ namespace Infrastructure.Adapters.Repositories
 
             return folder;
         }
+
+        public async Task Update(Folder folder)
+        {
+            using (var connection = new NpgsqlConnection(_connectionString))
+            {
+                string sql = "UPDATE folders SET name = @Name, user_id = @UserId, parent_folder_id = @ParentFolderId WHERE id = @Id";
+
+                await connection.ExecuteAsync(sql, new
+                {
+                    Id = folder.Id.Value,
+                    Name = folder.Name.Value,
+                    UserId = folder.UserId.Value,
+                    ParentFolderId = folder.ParentFolderId?.Value
+                });
+            }
+        }
     }
 }
