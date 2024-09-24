@@ -6,7 +6,7 @@ namespace Domain.Exceptions
 {
     public class UserNotOwnerFolderException : HttpResponseException
     {
-        private static new readonly int StatusCode = (int)HttpStatusCode.Unauthorized;
+        private static new readonly int StatusCode = (int)HttpStatusCode.Forbidden;
 
         public UserNotOwnerFolderException(string message) : base(StatusCode, message)
         {
