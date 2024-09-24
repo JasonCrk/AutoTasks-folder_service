@@ -6,8 +6,8 @@ namespace Application.Commands.Create
 {
     public class CreateFolderCommand : IRequest<Unit>
     {
-        public required FolderName Name;
-        public required UserId UserId;
-        public FolderId? ParentFolderId;
+        public required FolderName Name { get; set; }
+        public required UserId UserId { get; set; }
+        public FolderId? ParentFolderId { get; set; }
     }
 }
