@@ -1,0 +1,11 @@
+services:
+  autotasks-folder-db:
+    container_name: autotasks-folder-db
+    image: postgres:16.4-alpine3.20
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: autotasks_folder_db
+      POSTGRES_PASSWORD: autotasks_folder_db_password
