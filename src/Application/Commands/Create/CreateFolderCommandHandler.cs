@@ -5,6 +5,7 @@ using Domain.ValueObjects;
 using Shared.Domain;
 
 using MediatR;
+using Domain.Exceptions;
 
 namespace Application.Commands.Create
 {
@@ -18,14 +19,24 @@ namespace Application.Commands.Create
 
         public async Task<Unit> Handle(CreateFolderCommand request, CancellationToken cancellationToken)
         {
+            Folder? originalFolder = await _folderRepository.FindById(request.Id);
+
+            if (originalFolder != null && !originalFolder.UserId.Equals(request.UserId))
+                throw new UserNotOwnerFolderException();
+
             Folder folder = Folder.Create(
-                new FolderId(_uuidGenerator.Generate()),
+                originalFolder == null
+                    ? new FolderId(_uuidGenerator.Generate())
+                    : request.Id,
                 request.Name,
                 request.UserId,
                 request.ParentFolderId
             );
 
-            await _folderRepository.Save(folder);
+            if (originalFolder == null)
+                await _folderRepository.Save(folder);
+            else
+                await _folderRepository.Update(folder);
 
             return Unit.Value;
         }
