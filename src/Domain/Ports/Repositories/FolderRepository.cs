@@ -9,5 +9,6 @@ namespace Domain.Ports.Repositories
         Task<bool> Delete(FolderId id);
         Task<bool> ExistsById(FolderId id);
         Task<Folder?> FindById(FolderId id);
+        Task Update(Folder folder);
     }
 }
