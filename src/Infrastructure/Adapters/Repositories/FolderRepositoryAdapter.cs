@@ -56,7 +56,7 @@ namespace Infrastructure.Adapters.Repositories
                     Id = folder.Id.Value,
                     Name = folder.Name.Value,
                     UserId = folder.UserId.Value,
-                    ParentFolderId = folder.ParentFolderId
+                    ParentFolderId = folder.ParentFolderId?.Value
                 });
             }
 
